@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Profile - Tim Cookies</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .profile-box, .stats-box {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .flash {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .success { background: #4CAF50; }
+        .error { background: #f44336; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Admin Profile</h2>
+    <div>
+        <a href="/admin">Admin Panel</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="profile-box">
+        <h3>Profile Information</h3>
+        <p><strong>Username:</strong> {{ admin.username }}</p>
+        <p><strong>Role:</strong> {{ admin.role }}</p>
+        <p><strong>Status:</strong> Active Administrator</p>
+    </div>
+
+    <div class="stats-box">
+        <h3>System Summary</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Total Users</h4>
+                <p>{{ total_users }}</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Orders</h4>
+                <p>{{ total_orders }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

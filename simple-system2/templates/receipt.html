@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt - Tim Cookies</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fff7ed;
+            color: #4b2e2e;
+        }
+
+        .receipt {
+            width: 90%;
+            max-width: 720px;
+            margin: 40px auto;
+            background: white;
+            padding: 32px;
+            border-radius: 28px;
+            box-shadow: 0 10px 25px rgba(120, 72, 40, 0.16);
+            border: 2px solid #ffedd5;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #7c2d12;
+        }
+
+        .info {
+            background: #fff7ed;
+            padding: 16px;
+            border-radius: 18px;
+            margin: 20px 0;
+            border: 1px solid #fed7aa;
+        }
+
+        .info p {
+            margin: 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #ffedd5;
+            color: #7c2d12;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #fed7aa;
+            text-align: center;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ea580c;
+            margin-top: 22px;
+        }
+
+        .btn-area {
+            text-align: center;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            background: #f97316;
+            color: white;
+            border-radius: 22px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .print {
+            background: #22c55e;
+        }
+
+        .thank {
+            text-align: center;
+            margin-top: 22px;
+            color: #7c5a44;
+            font-size: 15px;
+        }
+
+        @media print {
+            .btn-area {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .receipt {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="receipt">
+    <h1>🍪 Tim Cookies</h1>
+    <h2>Order Receipt</h2>
+
+    <div class="info">
+        <p><strong>Order ID:</strong> {{ order["id"] }}</p>
+        <p><strong>Customer:</strong> {{ order["user"] }}</p>
+        <p><strong>Status:</strong> {{ order["status"] }}</p>
+    </div>
+
+    <table>
+        <tr>
+            <th>No.</th>
+            <th>Item</th>
+            <th>Price</th>
+        </tr>
+
+        {% for item in order["items"] %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item }}</td>
+            <td>RM {{ prices.get(item, 0) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="total">
+        Total: RM {{ order["total"] }}
+    </div>
+
+    <p class="thank">
+        Thank you for ordering from Tim Cookies. Your order is now recorded and waiting for admin confirmation.
+    </p>
+
+    <div class="btn-area">
+        <a href="/dashboard" class="btn">Back to Dashboard</a>
+        <a href="/cart" class="btn">View Cart</a>
+        <a href="#" onclick="window.print()" class="btn print">Print Receipt</a>
+    </div>
+</div>
+
+</body>
+</html>

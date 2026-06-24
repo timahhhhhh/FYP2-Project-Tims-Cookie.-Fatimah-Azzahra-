@@ -1,0 +1,89 @@
+[
+    {
+        "user": "ika",
+        "items": [
+            "Red Velvet Cookie",
+            "Strawberry Cookie",
+            "Matcha Cookie"
+        ],
+        "status": "Completed"
+    },
+    {
+        "user": "min",
+        "items": [
+            "Chocolate Cookie"
+        ],
+        "status": "Pending"
+    },
+    {
+        "user": "anis",
+        "items": [
+            "Chocolate Cookie",
+            "Matcha Cookie"
+        ],
+        "status": "Pending"
+    },
+    {
+        "user": "ecah",
+        "items": [
+            "Oreo Cookie",
+            "Butter Cookie"
+        ],
+        "status": "Pending"
+    },
+    {
+        "user": "amsyar",
+        "items": [
+            "Butter Cookie",
+            "Matcha Cookie"
+        ],
+        "status": "Pending"
+    },
+    {
+        "user": "khadijah",
+        "items": [
+            "Strawberry Cookie",
+            "Strawberry Cookie"
+        ],
+        "status": "Pending"
+    },
+    {
+        "id": 7,
+        "user": "amsyar",
+        "items": [
+            "Strawberry Cookie"
+        ],
+        "total": 6,
+        "status": "Pending"
+    },
+    {
+        "id": 8,
+        "user": "Luqman1",
+        "items": [
+            "Strawberry Cookie"
+        ],
+        "total": 6,
+        "status": "Pending"
+    },
+    {
+        "id": 9,
+        "user": "Aisyah",
+        "items": [
+            "Oreo Cookie",
+            "Oreo Cookie",
+            "Oreo Cookie"
+        ],
+        "total": 21,
+        "status": "Pending"
+    },
+    {
+        "id": 10,
+        "user": "imah01",
+        "items": [
+            "Oreo Cookie",
+            "Matcha Cookie"
+        ],
+        "total": 15,
+        "status": "Pending"
+    }
+]

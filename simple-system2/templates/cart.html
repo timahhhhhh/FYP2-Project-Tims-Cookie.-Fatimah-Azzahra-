@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart - Tim Cookies</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fff7ed;
+            color: #4b2e2e;
+        }
+
+        .navbar {
+            background: white;
+            color: #7c2d12;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(120, 72, 40, 0.12);
+        }
+
+        .navbar a {
+            color: #7c2d12;
+            text-decoration: none;
+            margin-left: 12px;
+            font-weight: bold;
+            background: #ffedd5;
+            padding: 9px 14px;
+            border-radius: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 35px auto;
+            background: white;
+            padding: 28px;
+            border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(120, 72, 40, 0.12);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #7c2d12;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th {
+            background: #ffedd5;
+            color: #7c2d12;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #fed7aa;
+            text-align: center;
+        }
+
+        .qty-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            background: #f97316;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .qty-number {
+            font-weight: bold;
+            font-size: 17px;
+            background: #fff7ed;
+            padding: 6px 14px;
+            border-radius: 15px;
+            border: 1px solid #fed7aa;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            margin: 8px 5px 0 0;
+        }
+
+        .btn-orange { background: #f97316; }
+        .btn-red { background: #fb7185; }
+        .btn-green { background: #22c55e; }
+
+        .flash {
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .success { background: #22c55e; }
+        .error { background: #ef4444; }
+
+        .empty {
+            text-align: center;
+            color: #7c5a44;
+            padding: 25px 0;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 22px;
+            color: #ea580c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>🛒 My Cart</h2>
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        {% if role == "admin" %}
+        <a href="/admin">Admin</a>
+        {% endif %}
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if cart %}
+    <table>
+        <tr>
+            <th>Cookie</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+            <th>Remove</th>
+        </tr>
+
+        {% for item, details in cart.items() %}
+        <tr>
+            <td>{{ item }}</td>
+
+            <td>
+                <div class="qty-box">
+                    <a class="qty-btn" href="/decrease-cart/{{ item }}">−</a>
+                    <span class="qty-number">{{ details.qty }}</span>
+                    <a class="qty-btn" href="/increase-cart/{{ item }}">+</a>
+                </div>
+            </td>
+
+            <td>RM {{ details.price }}</td>
+            <td>RM {{ details.subtotal }}</td>
+
+            <td>
+                <a class="btn btn-red" href="/remove-from-cart/{{ item }}">Remove 1</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 class="total">Total: RM {{ total }}</h3>
+
+    <a class="btn btn-orange" href="/clear-cart">Clear Cart</a>
+    <a class="btn btn-green" href="/checkout">Proceed to Checkout</a>
+
+    {% else %}
+    <div class="empty">
+        <h3>Your cart is empty 🍪</h3>
+        <p>Add some cookies first.</p>
+        <a class="btn btn-orange" href="/dashboard">Continue Shopping</a>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

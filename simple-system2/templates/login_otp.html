@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OTP Verification - Tim Cookies</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #fff7ed, #fed7aa);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .otp-card {
+            width: 430px;
+            max-width: 90%;
+            background: white;
+            padding: 35px;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(120, 72, 40, 0.18);
+            text-align: center;
+            border: 2px solid #ffedd5;
+        }
+
+        .icon {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin: 8px 0;
+            color: #7c2d12;
+        }
+
+        p {
+            color: #7c5a44;
+            line-height: 1.5;
+        }
+
+        .otp-box {
+            margin: 18px 0;
+            padding: 16px;
+            background: #fff7ed;
+            border: 2px dashed #fb923c;
+            color: #7c2d12;
+            border-radius: 18px;
+        }
+
+        .otp-label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #9a3412;
+            margin-bottom: 6px;
+        }
+
+        .otp-code {
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 6px;
+            color: #ea580c;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 15px 0;
+            border: 1px solid #fed7aa;
+            border-radius: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 18px;
+            letter-spacing: 3px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px #ffedd5;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #ea580c;
+        }
+
+        .flash {
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .success { background: #22c55e; }
+        .error { background: #ef4444; }
+
+        .small {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #9a6b4f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="otp-card">
+    <div class="icon">🔐</div>
+    <h2>OTP Verification</h2>
+    <p>Please enter the one-time password below within <strong>30 seconds</strong>.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if demo_otp %}
+    <div class="otp-box">
+        <div class="otp-label">OTP VERIFICATION CODE</div>
+        <div class="otp-code">{{ demo_otp }}</div>
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        <input type="text" name="otp" placeholder="Enter OTP" maxlength="6" required>
+        <button type="submit">Verify OTP</button>
+    </form>
+
+    <div class="small">
+        Check your email for the OTP code.
+    </div>
+</div>
+
+</body>
+</html>

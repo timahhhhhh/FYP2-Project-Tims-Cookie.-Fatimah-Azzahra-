@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - Tim Cookies</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fff7ed;
+            color: #4b2e2e;
+        }
+
+        .navbar {
+            background: #7c2d12;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.18);
+            padding: 9px 14px;
+            border-radius: 20px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 25px auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box, .box {
+            background: white;
+            border-radius: 22px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(120, 72, 40, 0.12);
+            margin-bottom: 20px;
+            border: 2px solid #ffedd5;
+        }
+
+        .stat-box h3 {
+            margin: 0 0 8px;
+            color: #7c2d12;
+        }
+
+        .stat-box p {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 0;
+            color: #ea580c;
+        }
+
+        h2, h3 {
+            margin-top: 0;
+            color: #7c2d12;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            background: white;
+        }
+
+        th {
+            background: #ffedd5;
+            color: #7c2d12;
+        }
+
+        th, td {
+            border-bottom: 1px solid #fed7aa;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 11px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: white;
+            font-size: 13px;
+            margin: 3px;
+            font-weight: bold;
+        }
+
+        .blue { background: #2196F3; }
+        .orange { background: #ff9800; }
+        .green { background: #22c55e; }
+        .red { background: #f44336; }
+        .brown { background: #7c2d12; }
+
+        .flash {
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .success { background: #22c55e; }
+        .error { background: #ef4444; }
+
+        .status {
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            background: #ffedd5;
+            color: #7c2d12;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2 style="color:white;">Admin Panel 🍪</h2>
+    <div>
+        <a href="/admin-profile">Admin Profile</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="stats">
+        <div class="stat-box">
+            <h3>Total Users</h3>
+            <p>{{ total_users }}</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>Total Orders</h3>
+            <p>{{ total_orders }}</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>Total Admins</h3>
+            <p>{{ total_admins }}</p>
+        </div>
+
+        <div class="stat-box">
+            <h3>Total Customers</h3>
+            <p>{{ total_customers }}</p>
+        </div>
+    </div>
+
+    <div class="box">
+        <h3>Registered Users</h3>
+
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+
+            {% for user in users %}
+            <tr>
+                <td>{{ user["username"] }}</td>
+                <td><span class="status">{{ user["role"] }}</span></td>
+                <td>
+                    {% if user["role"] == "customer" %}
+                        <a class="btn blue" href="/admin/make-admin/{{ user['username'] }}">Make Admin</a>
+                    {% endif %}
+
+                    {% if user["role"] == "admin" %}
+                        <a class="btn orange" href="/admin/make-customer/{{ user['username'] }}">Make Customer</a>
+                    {% endif %}
+
+                    <a class="btn red" href="/admin/delete-user/{{ user['username'] }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="box">
+        <h3>Customer Orders</h3>
+
+        <table>
+            <tr>
+                <th>No.</th>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Update Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ order.get("id", loop.index) }}</td>
+                <td>{{ order["user"] }}</td>
+                <td>
+                    {% for item in order["items"] %}
+                        {{ item }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>RM {{ order.get("total", 0) }}</td>
+                <td><span class="status">{{ order.get("status", "Pending") }}</span></td>
+                <td>
+                    <a class="btn orange" href="/admin/update-order/{{ loop.index0 }}/Pending">Pending</a>
+                    <a class="btn green" href="/admin/update-order/{{ loop.index0 }}/Completed">Completed</a>
+                    <a class="btn red" href="/admin/update-order/{{ loop.index0 }}/Cancelled">Cancelled</a>
+                </td>
+                <td>
+                    <a class="btn red" href="/admin/delete-order/{{ loop.index0 }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

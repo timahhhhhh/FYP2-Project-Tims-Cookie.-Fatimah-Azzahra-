@@ -1,0 +1,26 @@
+[
+    {
+        "username": "imah01",
+        "email": "fatimahazzahra9603@gmail.com",
+        "password": "scrypt:32768:8:1$kgdxC5gxFaV5y82j$77d48d2f040114879cbf8c608098b9fb56430c6e4fd88475b831ac5e8e38602c70e5070ea269fcc3572f1ecf56b73a1ccd3b2a95c85bd5205b9ebe7e7390081e",
+        "role": "admin"
+    },
+    {
+        "username": "min",
+        "email": "muqri@gmail.com",
+        "password": "scrypt:32768:8:1$SLtdYdAuSeWPI0f2$da424830299b3bdf2f18e46aac271f25b843a8ce23b63130dfa389f0ab22189f2a7805c0e44f9d9633e2041468b2a66b256d7f3785a58b9addeff0b06391e4d4",
+        "role": "customer"
+    },
+    {
+        "username": "ian",
+        "email": "ian12@gmail.com",
+        "password": "scrypt:32768:8:1$RuLU6JsYDpqqqo2G$02e02a435cce0a3a63e58521e81bb293b3ac4f2d4553c10154130d5ffde8bacc86fa8bb6abb6baf1371a1a01ce86e3ce162d5117e9ba0c4d9a0bd2c77e1ccf26",
+        "role": "customer"
+    },
+    {
+        "username": "Luqman",
+        "email": "luqmanhakim2@gmail.com",
+        "password": "scrypt:32768:8:1$qqUqmWGggMTaMGEW$99af2cdb7dc31ac25f9877b9ab7ebbf4bcaeae3f87cd6198f9d904edb90221be191f7864f58716e51da1ae43d4d9438e36f939f4befd367d781f162645ae362d",
+        "role": "customer"
+    }
+]

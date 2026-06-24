@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - Tim Cookies</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            background: #ff9800;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        ul {
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            margin-top: 15px;
+        }
+
+        .btn-green { background: #4CAF50; }
+        .btn-orange { background: #ff9800; }
+
+        .flash {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .success { background: #4CAF50; }
+        .error { background: #f44336; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Checkout</h2>
+    <div>
+        <a href="/cart">Cart</a>
+        <a href="/dashboard">Dashboard</a>
+    </div>
+</div>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h3>Order Summary</h3>
+    <ul>
+        {% for item in cart %}
+        <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Total Amount: RM {{ total }}</h3>
+
+    <a class="btn btn-green" href="/confirm-order">Confirm Order</a>
+    <a class="btn btn-orange" href="/cart">Back to Cart</a>
+</div>
+
+</body>
+</html>
